@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isGameOver == true)
+        if (isGameOver == true)
             return;
 
         transform.position += Vector3.forward * Time.deltaTime * Speed;
@@ -34,18 +34,28 @@ public class PlayerController : MonoBehaviour
         {
             transform.position += Vector3.right;
         }
-        
+
         int currentPlaneIndex = (int)transform.position.z / 5;
         currentPlaneIndex += 1;
 
+        if (currentPlaneIndex % 3 == 0)
+        {
+            if (PlaneController.CurrentPlaneCount - currentPlaneIndex == 2)
+            {
+                PlaneController.CreatePlane(3, 0.50f);
+            }
+        }
+    }
 
+    private void FixedUpdate()
+    {
         bool didHit = Physics.Raycast(rayTransform.position, Vector3.down, 10);
 
         // Debug.DrawRay(rayTransform.position, Vector3.down, Color.red, 10f);
 
-        if(didHit == false)
+        if (didHit == false)
         {
-            if(collectedCubeCount == 0)
+            if (collectedCubeCount == 0)
             {
                 Debug.Log("Oyunu Kaybettin");
                 isGameOver = true;
@@ -62,24 +72,13 @@ public class PlayerController : MonoBehaviour
                 lastChildTransform.position = new Vector3(transform.position.x, 0, transform.position.z);
             }
         }
-
-        //Debug.DrawRay(rayTransform.position, Vector3.down * 10, Color.red, 0.1f);
-
-
-        if (currentPlaneIndex % 3 == 0)
-        {
-            if (PlaneController.CurrentPlaneCount - currentPlaneIndex == 2)
-            {
-                PlaneController.CreatePlane(3, 0.50f);
-            }
-        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         CollectableCube collectableCube = other.GetComponent<CollectableCube>();
 
-        if(collectableCube != null)
+        if (collectableCube != null)
         {
             Destroy(other.gameObject);
 
