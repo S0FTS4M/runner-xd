@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
 
     private bool isGameOver = false;
 
+    public event System.Action BoxCountChanged; 
+
     // Update is called once per frame
     void Update()
     {
@@ -63,6 +65,8 @@ public class PlayerController : MonoBehaviour
             else
             {
                 collectedCubeCount -= 1;
+                BoxCountChanged?.Invoke();
+
                 int lastChildIndex = StackTransform.childCount - 1;
 
                 Transform lastChildTransform = StackTransform.GetChild(lastChildIndex);
@@ -86,6 +90,7 @@ public class PlayerController : MonoBehaviour
             Instantiate(collectedCubePrefab, nextStackPosition, Quaternion.identity, StackTransform);
 
             collectedCubeCount += 1;
+            BoxCountChanged?.Invoke();
         }
     }
 }
