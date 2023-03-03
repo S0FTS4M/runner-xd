@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class GameUIController : MonoBehaviour
 {
@@ -16,27 +17,33 @@ public class GameUIController : MonoBehaviour
     private void Start()
     {
         playerController.BoxCountChanged += OnBoxCountChanged;
+        playerController.DistanceChanged += OnDistanceChanged;
+        playerController.ScoreChanged    += OnScoreChanged;
 
         distanceText.SetText("Distance: " + (int)playerController.transform.position.z);
         scoreText.SetText("Score: " + (int)playerController.score);
         boxCountText.SetText("Boxes: " + playerController.collectedCubeCount);
-    }
-
-    private void Update()
-    {
-        distanceText.SetText("Distance: " + (int)playerController.transform.position.z);
-
-        scoreText.SetText("Score: " + (int)playerController.score);
     }
 
     private void OnDestroy()
     {
         playerController.BoxCountChanged -= OnBoxCountChanged;
+        playerController.DistanceChanged -= OnDistanceChanged;
+        playerController.ScoreChanged -= OnScoreChanged;
     }
 
     private void OnBoxCountChanged()
     {
         boxCountText.SetText("Boxes: " + playerController.collectedCubeCount);
-        Debug.Log("count updated");
+    }
+
+    private void OnDistanceChanged()
+    {
+        distanceText.SetText("Distance: " + (int)playerController.transform.position.z);
+    }
+
+    private void OnScoreChanged()
+    {
+        scoreText.SetText("Score: " + (int)playerController.score);
     }
 }

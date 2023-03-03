@@ -23,9 +23,17 @@ public class PlayerController : MonoBehaviour
 
     public float score;
 
+    public int prevDist;
+
+
+
     public event System.Action BoxCountChanged;
 
     public event System.Action GameOver;
+
+    public event System.Action DistanceChanged;
+
+    public event System.Action ScoreChanged;
 
 
     // Update is called once per frame
@@ -59,6 +67,8 @@ public class PlayerController : MonoBehaviour
                 PlaneController.CreatePlane(3, 0.50f);
             }
         }
+
+        CalculateDistance();
     }
 
     private void FixedUpdate()
@@ -127,8 +137,20 @@ public class PlayerController : MonoBehaviour
             collectedCubeCount += 1;
 
             score += 10;
+            ScoreChanged?.Invoke();
 
             BoxCountChanged?.Invoke();
+        }
+    }
+
+    public void CalculateDistance()
+    {
+        var difference = (int)transform.position.z - prevDist;
+        if (difference == 1)
+        {
+            prevDist = (int)transform.position.z;
+            DistanceChanged?.Invoke();
+            ScoreChanged?.Invoke();
         }
     }
 }
