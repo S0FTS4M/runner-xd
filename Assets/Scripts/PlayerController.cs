@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+
+    private string MaxScoreString = "MaxScore";
+
     public GameObject collectedCubePrefab;
 
     public float Speed;
@@ -16,9 +19,14 @@ public class PlayerController : MonoBehaviour
 
     public int collectedCubeCount;
 
-    private bool isGameOver = false;
+    public bool isGameOver = false;
 
-    public event System.Action BoxCountChanged; 
+    public float score;
+
+    public event System.Action BoxCountChanged;
+
+    public event System.Action GameOver;
+
 
     // Update is called once per frame
     void Update()
@@ -26,7 +34,11 @@ public class PlayerController : MonoBehaviour
         if (isGameOver == true)
             return;
 
-        transform.position += Vector3.forward * Time.deltaTime * Speed;
+        Vector3 nextStep = Vector3.forward * Time.deltaTime * Speed;
+
+        transform.position += nextStep;
+
+        score += nextStep.z;
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
@@ -51,6 +63,9 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (isGameOver == true)
+            return;
+
         bool didHit = Physics.Raycast(rayTransform.position, Vector3.down, 10);
 
         // Debug.DrawRay(rayTransform.position, Vector3.down, Color.red, 10f);
@@ -59,8 +74,28 @@ public class PlayerController : MonoBehaviour
         {
             if (collectedCubeCount == 0)
             {
-                Debug.Log("Oyunu Kaybettin");
+                //TODO: Kaydedilmiş veri var mı
+                if (PlayerPrefs.HasKey(MaxScoreString) == true)
+                {
+                    //TODO: kaydedilen veri varsa şu anki score daha büyük mü
+                    int savedMaxScore = PlayerPrefs.GetInt(MaxScoreString);
+
+                    if (savedMaxScore < score)
+                    {
+                        PlayerPrefs.SetInt(MaxScoreString, (int)score);
+                    }
+                }
+                else
+                {
+                    PlayerPrefs.SetInt(MaxScoreString, (int)score);
+                }
+
+
+                //TODO: eğer büyükse yeni score kaydedilir
+
                 isGameOver = true;
+
+                GameOver?.Invoke();
             }
             else
             {
@@ -90,6 +125,9 @@ public class PlayerController : MonoBehaviour
             Instantiate(collectedCubePrefab, nextStackPosition, Quaternion.identity, StackTransform);
 
             collectedCubeCount += 1;
+
+            score += 10;
+
             BoxCountChanged?.Invoke();
         }
     }
