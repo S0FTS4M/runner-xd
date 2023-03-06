@@ -10,6 +10,8 @@ public class PlaneController : MonoBehaviour
 
     public CubeSpawnerController CubeSpawnerController;
 
+   
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +20,7 @@ public class PlaneController : MonoBehaviour
 
     public void CreatePlane(int count, float probability)
     {
+       
         for (int i = 0; i < count; i++)
         {
             Vector3 nextPlanePosition = transform.position + (Vector3.forward * 5) * CurrentPlaneCount;

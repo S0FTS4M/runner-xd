@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
 
     public float Speed;
 
+    public float Difficulty;
+
     public Transform rayTransform;
 
     public PlaneController PlaneController;
@@ -46,6 +48,15 @@ public class PlayerController : MonoBehaviour
     public event System.Action ScoreChanged;
 
 
+    private void Start()
+    {
+        ScoreChanged += IncreaseDifficulty;
+    }
+
+    private void OnDestroy()
+    {
+        ScoreChanged -= IncreaseDifficulty;
+    }
 
 
     // Update is called once per frame
@@ -80,7 +91,7 @@ public class PlayerController : MonoBehaviour
         {
             if (PlaneController.CurrentPlaneCount - currentPlaneIndex == 2)
             {
-                PlaneController.CreatePlane(3, 0.50f);
+                PlaneController.CreatePlane(3, 1-Difficulty);
             }
         }
 
@@ -177,5 +188,10 @@ public class PlayerController : MonoBehaviour
         var tempPosValue = transform.position;
         tempPosValue.x = (float) horizantalPos;
         transform.position = tempPosValue;
+    }
+
+    private void IncreaseDifficulty()
+    {
+        if(Difficulty<0.8f)  Difficulty += 0.01f;
     }
 }
