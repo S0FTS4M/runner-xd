@@ -25,7 +25,6 @@ public class PlayerController : MonoBehaviour
             return;
 
         transform.position += Vector3.forward * Time.deltaTime * Speed;
-
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             transform.position += Vector3.left;
@@ -42,7 +41,8 @@ public class PlayerController : MonoBehaviour
         {
             if (PlaneController.CurrentPlaneCount - currentPlaneIndex == 2)
             {
-                PlaneController.CreatePlane(3, 0.50f);
+                // PlaneController.CreatePlane(3, 0.50f);
+                PlaneController.CreatePlane(3, 1);
             }
         }
     }

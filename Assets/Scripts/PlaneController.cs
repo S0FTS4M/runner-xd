@@ -8,7 +8,7 @@ public class PlaneController : MonoBehaviour
     [SerializeField] private int defaultPlaneCount;
     [SerializeField] private List<GameObject> pooledPlane;
     [SerializeField] private int amountToPool = 10;
-
+    [SerializeField] private int planeRenderLimit = 3;
     public int CurrentPlaneCount = 0;
 
     public CubeSpawnerController CubeSpawnerController;
@@ -41,8 +41,6 @@ public class PlaneController : MonoBehaviour
 
                 CubeSpawnerController.GenerateCubes(CurrentPlaneCount, 5);
             }
-
-
             CurrentPlaneCount += 1;
         }
     }
@@ -55,7 +53,37 @@ public class PlaneController : MonoBehaviour
                 pooledPlane[i].SetActive(true);
                 return pooledPlane[i];
             }
+
         }
-        return null;
+        sortList(pooledPlane);
+
+        pooledPlane[0].SetActive(false);
+
+        return getPlane();
+
+    }
+    private List<GameObject> sortList(List<GameObject> list)
+    {
+        for (int i = 0; i < list.Count - 1; i++)
+        {
+            for (int j = 0; j < list.Count - 1 - i; j++)
+            {
+                int first = int.Parse(list[j].name.Split(" ")[1]);
+                int second = int.Parse(list[j + 1].name.Split(" ")[1]);
+                if (first > second)
+                {
+                    var temp = list[j];
+                    list[j] = list[j + 1];
+                    list[j + 1] = temp;
+                }
+            }
+        }
+        for (int i = 0; i < list.Count; i++)
+        {
+            Debug.Log(int.Parse(list[i].name.Split(" ")[1]));
+        }
+        return list;
+
     }
 }
+
