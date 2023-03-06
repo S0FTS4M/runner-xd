@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    enum HorizantalPos
+    {
+        Left=-1,
+        Mid=0,
+        Right=1
+    }
+    private HorizantalPos horizantalPos;
 
     private string MaxScoreString = "MaxScore";
 
@@ -36,6 +43,8 @@ public class PlayerController : MonoBehaviour
     public event System.Action ScoreChanged;
 
 
+
+
     // Update is called once per frame
     void Update()
     {
@@ -47,16 +56,20 @@ public class PlayerController : MonoBehaviour
         transform.position += nextStep;
 
         score += nextStep.z;
-
+        
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            transform.position += Vector3.left;
+            horizantalPos--;           
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            transform.position += Vector3.right;
+            horizantalPos++;           
+        }        
+        if (Input.anyKeyDown)
+        {
+            CalculatePosition();
         }
-
+        
         int currentPlaneIndex = (int)transform.position.z / 5;
         currentPlaneIndex += 1;
 
@@ -118,7 +131,7 @@ public class PlayerController : MonoBehaviour
 
                 lastChildTransform.SetParent(null);
 
-                lastChildTransform.position = new Vector3(transform.position.x, 0, transform.position.z);
+                lastChildTransform.position = new Vector3(transform.position.x, 0, (int)transform.position.z+1);
             }
         }
     }
@@ -143,7 +156,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void CalculateDistance()
+    private void CalculateDistance()
     {
         var difference = (int)transform.position.z - prevDist;
         if (difference == 1)
@@ -152,5 +165,13 @@ public class PlayerController : MonoBehaviour
             DistanceChanged?.Invoke();
             ScoreChanged?.Invoke();
         }
+    }
+
+    private void CalculatePosition()
+    {
+        horizantalPos = (HorizantalPos) System.Math.Clamp((int) horizantalPos, -1, 1);
+        var tempPosValue = transform.position;
+        tempPosValue.x = (float) horizantalPos;
+        transform.position = tempPosValue;
     }
 }

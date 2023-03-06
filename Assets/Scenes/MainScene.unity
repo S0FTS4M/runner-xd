@@ -1211,6 +1211,7 @@ MonoBehaviour:
   collectedCubeCount: 0
   isGameOver: 0
   score: 0
+  prevDist: 0
 --- !u!54 &1417517113
 Rigidbody:
   m_ObjectHideFlags: 0
