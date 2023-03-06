@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
 
         if (collectableCube != null)
         {
-            Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
 
             Vector3 nextStackPosition = StackTransform.position + Vector3.up * collectedCubeCount;
             Instantiate(collectedCubePrefab, nextStackPosition, Quaternion.identity, StackTransform);
