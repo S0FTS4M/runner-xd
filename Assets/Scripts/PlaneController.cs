@@ -8,7 +8,6 @@ public class PlaneController : MonoBehaviour
     [SerializeField] private int defaultPlaneCount;
     [SerializeField] private List<GameObject> pooledPlane;
     [SerializeField] private int amountToPool = 10;
-    [SerializeField] private int planeRenderLimit = 3;
     public int CurrentPlaneCount = 0;
 
     public CubeSpawnerController CubeSpawnerController;
