@@ -1203,6 +1203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 924fcb3c656acee45b547521fd5abcd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NonTransparentCubeMat: {fileID: 2100000, guid: cb615b20e3017b842bd8ceec57aba320, type: 2}
   collectedCubePrefab: {fileID: 6361991586949411435, guid: 38fdb3d71a538b74585f4725a7a7c86c, type: 3}
   Speed: 3
   rayTransform: {fileID: 816826004}

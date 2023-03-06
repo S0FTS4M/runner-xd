@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField]
+    Material NonTransparentCubeMat;
+
     enum HorizantalPos
     {
         Left=-1,
@@ -132,6 +135,7 @@ public class PlayerController : MonoBehaviour
                 lastChildTransform.SetParent(null);
 
                 lastChildTransform.position = new Vector3(transform.position.x, 0, (int)transform.position.z+1);
+                lastChildTransform.GetChild(0).GetComponent<MeshRenderer>().material = NonTransparentCubeMat;
             }
         }
     }
