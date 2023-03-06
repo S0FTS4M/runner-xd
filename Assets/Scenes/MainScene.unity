@@ -972,7 +972,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df66ecae17fae194bae490e87fd7a836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cubePrefab: {fileID: 2909650069068659340, guid: 8651ca7a15764ef4f96c948a251acb7b, type: 3}
+  goodCubePrefab: {fileID: 2909650069068659340, guid: 8651ca7a15764ef4f96c948a251acb7b, type: 3}
+  badCubePrefab: {fileID: 2909650069068659340, guid: 0f15daaa0b9f0264bb00b29fd836fd11, type: 3}
 --- !u!1 &938823947
 GameObject:
   m_ObjectHideFlags: 0
@@ -1206,6 +1207,7 @@ MonoBehaviour:
   NonTransparentCubeMat: {fileID: 2100000, guid: cb615b20e3017b842bd8ceec57aba320, type: 2}
   collectedCubePrefab: {fileID: 6361991586949411435, guid: 38fdb3d71a538b74585f4725a7a7c86c, type: 3}
   Speed: 3
+  Difficulty: 0
   rayTransform: {fileID: 816826004}
   PlaneController: {fileID: 1707262022}
   StackTransform: {fileID: 938823948}
