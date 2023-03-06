@@ -6,7 +6,7 @@ public class CubeSpawnerController : MonoBehaviour
 {
     [SerializeField] private GameObject cubePrefab;
     [SerializeField] private int amountToPool = 10;
-    [SerializeField] private List<GameObject> pooledObject = new List<GameObject>();
+    [SerializeField] private List<GameObject> pooledCube = new List<GameObject>();
 
     private void Start()
     {
@@ -14,7 +14,8 @@ public class CubeSpawnerController : MonoBehaviour
         {
             GameObject cube = Instantiate(cubePrefab);
             cube.SetActive(false);
-            pooledObject.Add(cube);
+            cube.transform.SetParent(this.transform);
+            pooledCube.Add(cube);
         }
     }
     public void GenerateCubes(int currentPlaneIndex, int scale)
@@ -31,18 +32,19 @@ public class CubeSpawnerController : MonoBehaviour
                 // Instantiate(cubePrefab, newPosition, Quaternion.identity);
                 var activeCube = getPooledObject();
                 activeCube.transform.position = newPosition;
-                activeCube.SetActive(true);
+
             }
         }
     }
     public GameObject getPooledObject()
     {
 
-        for (int i = 0; i < pooledObject.Count; i++)
+        for (int i = 0; i < pooledCube.Count; i++)
         {
-            if (!pooledObject[i].activeInHierarchy)
+            if (!pooledCube[i].activeInHierarchy)
             {
-                return pooledObject[i];
+                pooledCube[i].SetActive(true);
+                return pooledCube[i];
             }
         }
         return null;
