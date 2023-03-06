@@ -295,6 +295,7 @@ MonoBehaviour:
   cubePrefab: {fileID: 2909650069068659340, guid: 8651ca7a15764ef4f96c948a251acb7b, type: 3}
   amountToPool: 20
   pooledCube: []
+  limit: 0
 --- !u!1 &938823947
 GameObject:
   m_ObjectHideFlags: 0
@@ -595,6 +596,5 @@ MonoBehaviour:
   defaultPlaneCount: 5
   pooledPlane: []
   amountToPool: 7
-  planeRenderLimit: 3
   CurrentPlaneCount: 0
   CubeSpawnerController: {fileID: 935794457}

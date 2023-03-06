@@ -54,7 +54,7 @@ public class PlaneController : MonoBehaviour
             }
 
         }
-        sortList(pooledPlane);
+        pooledPlane = sortList(pooledPlane);
 
         pooledPlane[0].SetActive(false);
 
@@ -77,12 +77,7 @@ public class PlaneController : MonoBehaviour
                 }
             }
         }
-        for (int i = 0; i < list.Count; i++)
-        {
-            Debug.Log(int.Parse(list[i].name.Split(" ")[1]));
-        }
         return list;
-
     }
 }
 
