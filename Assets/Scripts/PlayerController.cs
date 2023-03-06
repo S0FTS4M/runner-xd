@@ -158,16 +158,31 @@ public class PlayerController : MonoBehaviour
         if (collectableCube != null)
         {
             Destroy(other.gameObject);
+            
 
-            Vector3 nextStackPosition = StackTransform.position + Vector3.up * collectedCubeCount;
-            Instantiate(collectedCubePrefab, nextStackPosition, Quaternion.identity, StackTransform);
+            if (collectableCube.IsBad)
+            {
+                collectedCubeCount -= 1;
+                int lastChildIndex = StackTransform.childCount - 1;
+                Transform lastChildTransform = StackTransform.GetChild(lastChildIndex);
+                Destroy(lastChildTransform.gameObject);
+                
+            }
+            else
+            {
+                Vector3 nextStackPosition = StackTransform.position + Vector3.up * collectedCubeCount;
+                Instantiate(collectedCubePrefab, nextStackPosition, Quaternion.identity, StackTransform);
 
-            collectedCubeCount += 1;
+                collectedCubeCount += 1;
 
-            score += 10;
-            ScoreChanged?.Invoke();
+                score += 10;
+                ScoreChanged?.Invoke();
 
+                
+            }
             BoxCountChanged?.Invoke();
+
+
         }
     }
 
@@ -192,6 +207,6 @@ public class PlayerController : MonoBehaviour
 
     private void IncreaseDifficulty()
     {
-        if(Difficulty<0.8f)  Difficulty += 0.01f;
+        if(Difficulty<0.8f)  Difficulty += 0.005f;
     }
 }
