@@ -25,11 +25,11 @@ public class PlayerController : MonoBehaviour
             return;
 
         transform.position += Vector3.forward * Time.deltaTime * Speed;
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.LeftArrow) && transform.position.x > -1)
         {
             transform.position += Vector3.left;
         }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.RightArrow) && transform.position.x < 1)
         {
             transform.position += Vector3.right;
         }
