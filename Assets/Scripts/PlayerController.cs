@@ -18,7 +18,6 @@ public class PlayerController : MonoBehaviour
 
     private bool isGameOver = false;
 
-    // Update is called once per frame
     void Update()
     {
         if (isGameOver == true)
