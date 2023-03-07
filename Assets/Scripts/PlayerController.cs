@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
 
     public int collectedCubeCount;
 
-    private bool isGameOver = false;
+    public bool isGameOver = false;
     [SerializeField] private Vector3 lastPlacedCoor;
     [SerializeField] private List<GameObject> pooledCollectedCubeFree;
     [SerializeField] private List<GameObject> pooledCollectedCubeUsed;
