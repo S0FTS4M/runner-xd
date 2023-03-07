@@ -18,6 +18,21 @@ public class PlayerController : MonoBehaviour
 
     private bool isGameOver = false;
     [SerializeField] private Vector3 lastPlacedCoor;
+    [SerializeField] private List<GameObject> pooledCollectedCubeFree;
+    [SerializeField] private List<GameObject> pooledCollectedCubeUsed;
+
+    [SerializeField] private int PoolSizeInStart;
+
+    private void Awake()
+    {
+        pooledCollectedCubeFree = new List<GameObject>();
+        pooledCollectedCubeUsed = new List<GameObject>();
+        for (int i = 0; i < PoolSizeInStart; i++)
+        {
+            generateCubes();
+        }
+    }
+
     void Update()
     {
         if (isGameOver == true)
@@ -63,14 +78,56 @@ public class PlayerController : MonoBehaviour
             {
                 collectedCubeCount -= 1;
                 int lastChildIndex = StackTransform.childCount - 1;
-                Transform lastChildTransform = StackTransform.GetChild(lastChildIndex);
-                lastChildTransform.SetParent(null);
+                Transform lastChildTransform = getObjectFromStack().transform;
                 lastPlacedCoor = new Vector3(transform.position.x, 0, Mathf.RoundToInt(transform.position.z));
                 lastChildTransform.position = lastPlacedCoor;
 
             }
 
         }
+    }
+    private GameObject getObject()
+    {
+        int totalFree = pooledCollectedCubeFree.Count;
+        if (totalFree == 0)
+        {
+            Debug.Log(pooledCollectedCubeUsed.Count);
+            if (pooledCollectedCubeUsed.Count < 3)
+            {
+                generateCubes();
+                return getObject();
+            }
+            var lastusedcube = pooledCollectedCubeUsed[0];
+            pooledCollectedCubeUsed.Remove(lastusedcube);
+            pooledCollectedCubeFree.Add(lastusedcube);
+
+            return getObject();
+        }
+        GameObject g = pooledCollectedCubeFree[totalFree - 1];
+        pooledCollectedCubeFree.RemoveAt(totalFree - 1);
+        g.SetActive(true);
+        return g;
+    }
+    private GameObject getObjectFromStack()
+    {
+        int totalFree = pooledCollectedCubeFree.Count;
+        if (StackTransform.childCount > 0)
+        {
+            var g = StackTransform.GetChild(StackTransform.childCount - 1).gameObject;
+            pooledCollectedCubeUsed.Add(g);
+            g.transform.SetParent(null);
+            return g;
+
+        }
+        return getObject();
+    }
+    private void generateCubes()
+    {
+        GameObject g = Instantiate(collectedCubePrefab);
+        g.transform.parent = transform;
+        g.SetActive(false);
+        pooledCollectedCubeFree.Add(g);
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -82,8 +139,9 @@ public class PlayerController : MonoBehaviour
             other.gameObject.SetActive(false);
 
             Vector3 nextStackPosition = StackTransform.position + Vector3.up * collectedCubeCount;
-            Instantiate(collectedCubePrefab, nextStackPosition, Quaternion.identity, StackTransform);
-
+            var collectedCube = getObject();
+            collectedCube.transform.SetParent(StackTransform);
+            collectedCube.transform.position = nextStackPosition;
             collectedCubeCount += 1;
         }
     }

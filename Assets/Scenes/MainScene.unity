@@ -532,6 +532,7 @@ MonoBehaviour:
   PlaneController: {fileID: 1707262022}
   StackTransform: {fileID: 938823948}
   collectedCubeCount: 0
+  lastPlacedCoor: {x: 0, y: 0, z: 0}
 --- !u!54 &1417517113
 Rigidbody:
   m_ObjectHideFlags: 0
