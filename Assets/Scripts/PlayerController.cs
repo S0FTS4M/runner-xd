@@ -91,7 +91,6 @@ public class PlayerController : MonoBehaviour
         int totalFree = pooledCollectedCubeFree.Count;
         if (totalFree == 0)
         {
-            Debug.Log(pooledCollectedCubeUsed.Count);
             if (pooledCollectedCubeUsed.Count < 3)
             {
                 generateCubes();
