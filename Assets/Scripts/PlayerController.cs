@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     public int collectedCubeCount;
 
     private bool isGameOver = false;
-
+    [SerializeField] private Vector3 lastPlacedCoor;
     void Update()
     {
         if (isGameOver == true)
@@ -40,8 +40,8 @@ public class PlayerController : MonoBehaviour
         {
             if (PlaneController.CurrentPlaneCount - currentPlaneIndex == 2)
             {
-                // PlaneController.CreatePlane(3, 0.50f);
-                PlaneController.CreatePlane(3, 1);
+                PlaneController.CreatePlane(3, 0.50f);
+                //PlaneController.CreatePlane(3, 1);
             }
         }
     }
@@ -59,17 +59,17 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("Oyunu Kaybettin");
                 isGameOver = true;
             }
-            else
+            else if (lastPlacedCoor != new Vector3(transform.position.x, 0, Mathf.RoundToInt(transform.position.z)))
             {
                 collectedCubeCount -= 1;
                 int lastChildIndex = StackTransform.childCount - 1;
-
                 Transform lastChildTransform = StackTransform.GetChild(lastChildIndex);
-
                 lastChildTransform.SetParent(null);
+                lastPlacedCoor = new Vector3(transform.position.x, 0, Mathf.RoundToInt(transform.position.z));
+                lastChildTransform.position = lastPlacedCoor;
 
-                lastChildTransform.position = new Vector3(transform.position.x, 0, transform.position.z);
             }
+
         }
     }
 
