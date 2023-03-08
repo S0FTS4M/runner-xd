@@ -240,7 +240,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ScoreText: {fileID: 1686365654}
-  score: 0
+  player: {fileID: 0}
 --- !u!1 &156762229
 GameObject:
   m_ObjectHideFlags: 0
@@ -1099,6 +1099,7 @@ MonoBehaviour:
   StackTransform: {fileID: 938823948}
   collectedCubeCount: 0
   isGameOver: 0
+  score: 0
   lastPlacedCoor: {x: 0, y: 0, z: 0}
   pooledCollectedCubeFree: []
   pooledCollectedCubeUsed: []
@@ -1202,7 +1203,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1433297095}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 155168334}
+        m_TargetAssemblyTypeName: GameOverCanvasManager, Assembly-CSharp
+        m_MethodName: Restart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1433297095
 MonoBehaviour:
   m_ObjectHideFlags: 0
