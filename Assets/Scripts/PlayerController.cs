@@ -17,10 +17,12 @@ public class PlayerController : MonoBehaviour
     public int collectedCubeCount;
 
     public bool isGameOver = false;
+
+    public int score;
+
     [SerializeField] private Vector3 lastPlacedCoor;
     [SerializeField] private List<GameObject> pooledCollectedCubeFree;
     [SerializeField] private List<GameObject> pooledCollectedCubeUsed;
-
     [SerializeField] private int PoolSizeInStart;
 
     private void Awake()
@@ -36,8 +38,10 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (isGameOver == true)
+        {
+            GameOverCanvasManager.instance.gameObject.SetActive(true);
             return;
-
+        }
         transform.position += Vector3.forward * Time.deltaTime * Speed;
         if (Input.GetKeyDown(KeyCode.LeftArrow) && transform.position.x > -1)
         {
@@ -50,7 +54,7 @@ public class PlayerController : MonoBehaviour
 
         int currentPlaneIndex = (int)transform.position.z / 5;
         currentPlaneIndex += 1;
-
+        score++;
         if (currentPlaneIndex % 3 == 0)
         {
             if (PlaneController.CurrentPlaneCount - currentPlaneIndex == 2)
