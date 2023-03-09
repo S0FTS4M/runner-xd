@@ -5,8 +5,6 @@ using UnityEngine;
 public class CollectableCube : MonoBehaviour
 {
     public bool IsBad;
-
-
     private Vector3 rotation = new Vector3(0, 0, 1);
     public void FixedUpdate()
     {
