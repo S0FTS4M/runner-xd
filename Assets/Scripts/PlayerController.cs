@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     }
     private HorizantalPos horizantalPos;
 
+    private float StartingPosition;
+
     private string MaxScoreString = "MaxScore";
 
     public GameObject collectedCubePrefab;
@@ -51,6 +53,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         ScoreChanged += IncreaseDifficulty;
+        StartingPosition = transform.position.x;
     }
 
     private void OnDestroy()
@@ -199,7 +202,7 @@ public class PlayerController : MonoBehaviour
 
     private void CalculatePosition()
     {
-        horizantalPos = (HorizantalPos) System.Math.Clamp((int) horizantalPos, -1, 1);
+        horizantalPos = (HorizantalPos) System.Math.Clamp((int) horizantalPos, -1+StartingPosition, 1+StartingPosition);
         var tempPosValue = transform.position;
         tempPosValue.x = (float) horizantalPos;
         transform.position = tempPosValue;
