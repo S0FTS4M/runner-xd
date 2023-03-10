@@ -12,7 +12,6 @@ public class GameOverCanvasManager : MonoBehaviour
 
     public static GameOverCanvasManager instance;
 
-    public event EventHandler RestartEvent;
     private void Awake()
     {
         instance = this;

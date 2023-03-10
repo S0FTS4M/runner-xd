@@ -40,6 +40,11 @@ public class PlaneController : MonoBehaviour
 
                 CubeSpawnerController.GenerateCubes(CurrentPlaneCount, 5);
             }
+            else
+            {
+                probability += 0.15f;
+                Debug.Log(probability);
+            }
             CurrentPlaneCount += 1;
         }
     }
