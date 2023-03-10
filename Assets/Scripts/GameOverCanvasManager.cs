@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using UnityEngine.SceneManagement;
+
 public class GameOverCanvasManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI ScoreText;
@@ -27,8 +29,6 @@ public class GameOverCanvasManager : MonoBehaviour
     }
     public void Restart()
     {
-        player.isGameOver = false;
-        this.gameObject.SetActive(false);
-        RestartEvent?.Invoke(this, EventArgs.Empty);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
