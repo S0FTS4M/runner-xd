@@ -26,13 +26,14 @@ public class PlaneController : MonoBehaviour
 
     public void CreatePlane(int count, float probability)
     {
+        var emptycount = 0;
         for (int i = 0; i < count; i++)
         {
             Vector3 nextPlanePosition = transform.position + (Vector3.forward * 5) * CurrentPlaneCount;
 
             float randomNumber = Random.Range(0f, 1f);
 
-            if (randomNumber < probability)
+            if (randomNumber < probability || emptycount >= 2)
             {
                 var plane = getPlane();
                 plane.transform.position = nextPlanePosition;
@@ -43,6 +44,7 @@ public class PlaneController : MonoBehaviour
             else
             {
                 probability += 0.15f;
+                emptycount++;
                 Debug.Log(probability);
             }
             CurrentPlaneCount += 1;

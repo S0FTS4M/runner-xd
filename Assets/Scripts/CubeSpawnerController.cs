@@ -28,7 +28,7 @@ public class CubeSpawnerController : MonoBehaviour
         {
             float randomNumber = Random.Range(0f, 1f);
 
-            if (randomNumber > 0.5f)
+            if (randomNumber > 0.3f)
             {
                 Vector3 newPosition = new Vector3(planePos.x + i, planePos.y + 1, planePos.z);
                 // Instantiate(cubePrefab, newPosition, Quaternion.identity);
