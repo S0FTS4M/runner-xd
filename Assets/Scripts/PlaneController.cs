@@ -1,8 +1,8 @@
 using UnityEngine;
-
-public class PlaneController : MonoBehaviour
+using Fusion;
+public class PlaneController : NetworkBehaviour,ISpawned
 {
-    public GameObject planePrefab;
+    public NetworkObject planePrefab;
 
     public int defaultPlaneCount;
 
@@ -10,13 +10,6 @@ public class PlaneController : MonoBehaviour
 
     public CubeSpawnerController CubeSpawnerController;
 
-   
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        CreatePlane(defaultPlaneCount, 1f);
-    }
 
     public void CreatePlane(int count, float probability)
     {
@@ -29,7 +22,8 @@ public class PlaneController : MonoBehaviour
 
             if(randomNumber < probability)
             {
-                GameObject plane = Instantiate(planePrefab, nextPlanePosition, Quaternion.identity);
+                //GameObject plane = Instantiate(planePrefab, nextPlanePosition, Quaternion.identity);
+                var plane = Runner.Spawn(planePrefab, nextPlanePosition, Quaternion.identity,Runner.LocalPlayer);
 
                 plane.name = "Plane " + i;
 

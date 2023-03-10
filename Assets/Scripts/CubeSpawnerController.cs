@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Fusion;
 
-public class CubeSpawnerController : MonoBehaviour
+public class CubeSpawnerController : NetworkBehaviour
 {
-    public GameObject goodCubePrefab;
-    public GameObject badCubePrefab;
+    public NetworkObject goodCubePrefab;
+    public NetworkObject badCubePrefab;
 
     public void GenerateCubes(int currentPlaneIndex, int scale)
     {
@@ -18,12 +19,13 @@ public class CubeSpawnerController : MonoBehaviour
             if(randomNumber > 0.5f)
             {
                 Vector3 newPosition = new Vector3(planePos.x + i, planePos.y + 1, planePos.z);
-                Instantiate(goodCubePrefab, newPosition, Quaternion.identity);
+                Runner.Spawn(goodCubePrefab, newPosition, Quaternion.identity);
+                
             }
             else if(randomNumber>0.4f)
             {
                 Vector3 newPosition = new Vector3(planePos.x + i, planePos.y + 1, planePos.z);
-                Instantiate(badCubePrefab, newPosition, Quaternion.identity);                
+                Runner.Spawn(badCubePrefab, newPosition, Quaternion.identity);                
             }
         }
     }
